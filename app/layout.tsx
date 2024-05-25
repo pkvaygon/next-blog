@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Providers } from "@/providers";
+import Header from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +17,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html suppressHydrationWarning lang="en">
+      <body className={inter.className}>
+        <Providers>
+          <svg
+            className="pointer-events-none fixed isolate z-50 opacity-70 mix-blend-soft-light"
+            width="100%"
+            height="100%">
+            <filter id="pedroduarteisalegend">
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.80"
+                numOctaves="4"
+                stitchTiles="stitch"></feTurbulence>
+            </filter>
+            <rect
+              width="100%"
+              height="100%"
+              filter="url(#pedroduarteisalegend)"></rect>
+          </svg>
+          <Header/>
+          {children}
+        </Providers>
+      </body>
     </html>
   );
 }
